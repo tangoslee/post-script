@@ -3,14 +3,16 @@
     "description": "Script manager for laravel",
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "^11.3"
+        "phpunit/phpunit": "^11.3",
+        "orchestra/testbench": "^9.3"
     },
     "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Tangoslee\\PostScript\\": "src/"
+            "Tangoslee\\PostScript\\": "src/",
+            "Tangoslee\\PostScript\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -21,6 +23,45 @@
     ],
     "require": {
         "php": "^8.0",
+        "illuminate/support": "^8.12|^9.0|^10.0|^11.0",
+        "illuminate/console": "^8.12|^9.0|^10.0|^11.0",
         "illuminate/database": "^8.12|^9.0|^10.0|^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tangoslee\\PostScript\\PostScriptServiceProvider"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
+        ],
+        "test-feature": [
+            "@php vendor/bin/phpunit --testsuite=Feature"
+        ]
     }
 }

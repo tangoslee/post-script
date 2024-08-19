@@ -9,7 +9,8 @@ return new class extends Migration {
 
     public function up(): void
     {
-        Schema::create('post_scripts', function (Blueprint $table) {
+        dump('table: ' . config('post-script.table'));
+        Schema::create(config('post-script.table'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('script');
             $table->unsignedInteger('batch');
@@ -18,6 +19,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('post_scripts');
+        Schema::dropIfExists(config('post-script.table'));
     }
 };

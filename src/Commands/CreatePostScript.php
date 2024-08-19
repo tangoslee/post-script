@@ -65,7 +65,7 @@ EOL;
             }
 
             $this->info("$path created");
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->error($e->getMessage());
         }
     }

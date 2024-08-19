@@ -11,15 +11,15 @@ class PostScriptServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->registerCommands();
-        AboutCommand::add('Post Script', fn() => ['Version' => '1.0.0']);
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/post-script.php', 'post_scripts'
+        );
+        AboutCommand::add('Post Script', fn() => ['Version' => '0.5.0']);
     }
 
     public function register(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/post_script.php', 'post_script'
-        );
+        $this->registerCommands();
     }
 
     protected function registerCommands(): void
@@ -29,11 +29,18 @@ class PostScriptServiceProvider extends ServiceProvider
         }
 
         $this->publishesMigrations([
+            __DIR__ . '/../config' => base_path('config'),
+        ]);
+
+        $this->publishesMigrations([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ]);
 
+        $this->publishesMigrations([
+            __DIR__ . '/../post-scripts' => base_path('post-scripts'),
+        ]);
+
         $this->commands([
-            Commands\PostScript::class,
             Commands\RunPostScript::class,
             Commands\CreatePostScript::class,
             Commands\ShowPostScript::class,
