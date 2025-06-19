@@ -99,6 +99,11 @@ trait PostScriptable
      */
     private function localScriptPath(): string
     {
-        return config('post-script.script_path') . DIRECTORY_SEPARATOR . '/bin/local_script.sh';
+        return config('post-script.script_path') . '/bin/local_script.sh';
+    }
+
+    private function initScriptPath(): string
+    {
+        return config('post_script.script_path') . '/bin/init_script.sh';
     }
 }
