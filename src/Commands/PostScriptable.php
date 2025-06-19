@@ -104,6 +104,6 @@ trait PostScriptable
 
     private function initScriptPath(): string
     {
-        return config('post_script.script_path') . '/bin/init_script.sh';
+        return config('post-script.script_path') . '/bin/init_script.sh';
     }
 }
