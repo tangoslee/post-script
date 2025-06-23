@@ -131,7 +131,7 @@ class RunPostScript extends Command
             $this->runShellScript($script);
 
             // record db
-            DB::table(config('post_script.table'))
+            DB::table(config('post-script.table'))
                 ->insert([
                     'script' => basename($script),
                     'batch' => $batch,
